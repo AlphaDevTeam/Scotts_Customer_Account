@@ -9,21 +9,42 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Navigator
 } from 'react-native';
-import List from './src/components/List';
-import Header from './src/components/header';
-import Header0 from './src/components/header0';
-import SearchPanel from './src/components/SearchPanel';
 
-import KeepAwake from 'react-native-keep-awake';
+import MyScene from './src/components/MyScene';
 
 
-export default class customer_account extends Component {
+export default class CustomerAccount extends Component {
+
   render() {
     return (
-      <SearchPanel/>
-    );
+      <Navigator
+        initialRoute={{ title: 'My Initial Scene', index: 0 }}
+        renderScene={(route, navigator) =>
+          <MyScene
+            title={route.title}
+
+            // Function to call when a new scene should be displayed
+            onForward={() => {
+              const nextIndex = route.index + 1;
+              navigator.push({
+                title: 'Scene ' + nextIndex,
+                index: nextIndex,
+              });
+            }}
+
+            // Function to call to go back to the previous scene
+            onBack={() => {
+              if (route.index > 0) {
+                navigator.pop();
+              }
+            }}
+          />
+        }
+      />
+    )
   }
 }
 
@@ -33,22 +54,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  detailsContentStyle: {
-    flex: 2,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    padding: 5,
-    backgroundColor:'white',
-    backgroundColor: '#F8F8F8',
-    height: 60,
-    paddingTop: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    elevation: 2,
-    position: 'relative'
   },
   welcome: {
     fontSize: 20,
@@ -62,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('customer_account', () => customer_account);
+AppRegistry.registerComponent('CustomerAccount', () => CustomerAccount);

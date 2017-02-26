@@ -1,4 +1,4 @@
-package com.customer_account;
+package com.customeraccount;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "customer_account";
+        return "CustomerAccount";
     }
 }

@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class customer_account extends Component {
+export default class CustomerAccount extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('customer_account', () => customer_account);
+AppRegistry.registerComponent('CustomerAccount', () => CustomerAccount);

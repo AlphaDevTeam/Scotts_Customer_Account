@@ -2,14 +2,9 @@ import React from 'react';
 import { Text, View, Image, Linking } from 'react-native';
 import Card from './Card';
 import CardSection from './CardSection';
-import Button from './Button';
 
-
-
-const DetailSummary = ({ album }) => {
-  //const { title, artist, thumbnail_image, image, url } = album;
-  const { ID,Description, TrnDate ,DrAmount,CrAmount,BalanceAmount,Terminal,AUser } = album;
-
+const DetailSummaryHeader = () => {
+  var ID = 122;
   const {
     thumbnailStyle,
     headerContentStyle,
@@ -36,16 +31,16 @@ const DetailSummary = ({ album }) => {
         <View key={ID} style={detailsContentStyle}>
           <CardSection key={"Header"+ID}>
             <View style={headerContentStyle}>
-              <Text style={headerTextStyle}>{Description}</Text>
-              <Text>Date : {formatDate(TrnDate)}</Text>
-              <Text>{Terminal} - {AUser} </Text>
+              <Text style={headerTextStyle}>Header</Text>
+              <Text>Date : {formatDate("2014-12-20T00:00:00.000Z")}</Text>
+              <Text>Test </Text>
             </View>
           </CardSection>
           <CardSection key={"Details"+ID}>
             <View style={subContentStyle}>
-              <Text>Dr   : {DrAmount}</Text>
-              <Text>Cr   : {CrAmount}</Text>
-              <Text style={headerTextStyle}>Balance : {BalanceAmount}</Text>
+              <Text>0</Text>
+              <Text>0</Text>
+              <Text style={headerTextStyle}>Balance</Text>
             </View>
           </CardSection>
         </View>
@@ -93,4 +88,4 @@ const styles = {
   }
 };
 
-export default DetailSummary;
+export default DetailSummaryHeader;
