@@ -1,19 +1,20 @@
 import Autocomplete from 'react-native-autocomplete-input';
 import Comp from './TestComp';
 import React, { Component } from 'react';
+import CardSection from './CardSection';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,TouchableWithoutFeedback,DatePickerAndroid
 } from 'react-native';
 
 var server = "192.168.43.234";
-//var server = "192.168.1.5";
+//var server = "192.168.1.3";
 var serverPort = "3000";
 var customerID = "0";
-const API_Customer = 'http://' + server + ':' + serverPort + '/api/Customer?Inactive=2';
-const API_Cust_Acct = 'http://' + server + ':' + serverPort + '/api/CustomerTransaction?CustomerID=' ;
+const API_Customer = 'http://' + server + ':' + serverPort + '/api/Customer?Inactive=0';
+const API_Cust_Acct = 'http://' + server + ':' + serverPort + '/api/CustomerTransaction' ;
 
 class SearchPanel extends Component {
 
@@ -23,11 +24,26 @@ class SearchPanel extends Component {
       customerInfos: [],
       dataSet: [],
       query: '',
-      custID:0
+      custID:0,simpleDate: new Date(),fromText:new Date().toLocaleDateString() , toText:new Date().toLocaleDateString()
     };
-
-
   }
+
+  showPicker = async(stateKey,options) => {
+    try{
+      var newState ={};
+      const {action,year,month,day} = await DatePickerAndroid.open(options);
+      if(action === DatePickerAndroid.dismisedAction){
+        newState[stateKey + 'Text'] = 'dismissed';
+      }else{
+        var date = new Date(year,month,day);
+        newState[stateKey + 'Text'] = date.toLocaleDateString();
+        newState[stateKey + 'Date'] = date;
+      }
+      this.setState(newState);
+    }catch({code,message}){
+      console.warn(`Error in Example '${stateKey}': `, message);
+    }
+  };
 
   componentDidMount() {
     //console.log(API);
@@ -59,7 +75,25 @@ class SearchPanel extends Component {
 
     return (
       <View>
-          <Autocomplete
+        <View style={styles.dateContainer}>
+          <CardSection>
+            <View style={styles.headerTextStyle}>
+              <View style={styles.headerTextStyle}>
+                <Text style={styles.headerTextStyle} >From Date : </Text>
+                <TouchableWithoutFeedback onPress={this.showPicker.bind(this,'from',{date:this.state.simpleDate})}>
+                  <Text>{this.state.fromText}</Text>
+                </TouchableWithoutFeedback>
+              </View>
+              <View style={styles.headerTextStyle}>
+                <Text style={styles.headerTextStyle} >To Date : </Text>
+                <TouchableWithoutFeedback onPress={this.showPicker.bind(this,'to',{date:this.state.simpleDate})}>
+                  <Text>{this.state.toText}</Text>
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+          </CardSection>
+        </View>
+        <Autocomplete
             autoCapitalize="none"
             autoCorrect={false}
             containerStyle={styles.autocompleteContainer}
@@ -76,8 +110,9 @@ class SearchPanel extends Component {
             )}
           />
             <View style={styles.container}>
-              <Comp  key={this.state.custID} source={API_Cust_Acct + this.state.custID}/>
+              <Comp custID = {this.state.custID} key={this.state.custID +this.state.fromText + this.state.toText } source={API_Cust_Acct +"?CustomerID="+ this.state.custID + "&between=trnDate&from='" + this.state.fromText + "'&to='" + this.state.toText +"'" }/>
             </View>
+
       </View>
 
     );
@@ -86,8 +121,21 @@ class SearchPanel extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 20,
     zIndex: 1
+  },
+  headerContentStyle: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+    padding: 2,
+  },
+  dateContainer: {
+    flexDirection: 'column',
+    marginTop: 40,
+    zIndex: 2,
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
   },
   viewStyle: {
     backgroundColor: '#F8F8F8',

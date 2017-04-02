@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import DetailSummary from './DetailSummary';
 import DetailSummaryHeader from './DetailSummaryHeader';
+import HeaderDetails from './HeaderDetails';
 
 import {
   StyleSheet,
@@ -22,6 +23,7 @@ class TestComp extends Component {
   componentDidMount() {
 
     serverURL = this.props.source;
+    CustomerID = this.props.custID;
     //serverURL = 'http://192.168.43.234:3000/api/CustomerTransaction?CustomerID=123';
     console.log('Connecting .....' + serverURL);
     fetch(serverURL).then((response) => response.json()).then((responseJson) => {
@@ -47,7 +49,7 @@ class TestComp extends Component {
 
     return (
       <View>
-        <Text>Customer Balance : 00000</Text>
+        <HeaderDetails key={this.props.custID} customerID={this.props.custID}/>
         <ScrollView>
           { this.renderAlbums() }
         </ScrollView>

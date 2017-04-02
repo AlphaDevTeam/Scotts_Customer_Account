@@ -11,7 +11,7 @@ export default class MyScene extends Component {
       <View >
 
         <SearchPanel/>
-        
+
       </View>
     )
   }
