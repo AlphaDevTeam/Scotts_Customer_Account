@@ -13,8 +13,8 @@ import {
   ScrollView
 } from 'react-native';
 
-var server = "192.168.43.234";
-//var server = "192.168.1.3";
+//var server = "192.168.43.234";
+var server = "192.168.1.3";
 var serverPort = "3000";
 var customerID = "0";
 const API_Customer = 'http://' + server + ':' + serverPort + '/api/Customer?Inactive=2';
@@ -31,6 +31,9 @@ const API_CUSTOMER_TRN_CHEQUES_IN_HAND =  'http://' + server + ':' + serverPort 
 
 const API_CUSTOMER_BALANCE = 'http://' + server + ':' + serverPort +
                              '/api/fetchWithParam/Sum(BalanceAmount)/CustomerBalance/resultValue?CustomerID='
+
+const API_CUSTOMER_REMAINING_BALANCE = 'http://' + server + ':' + serverPort +
+                            '/api/remainingBalance?Customer.CustomerID='
 
 
 
@@ -64,6 +67,7 @@ class HeaderDetails extends Component {
             <FetchDataDisplay displayValue="Cheques In Float" key= {API_CUSTOMER_TRN_CHEQUES_IN_FLOAT + customerID} source={API_CUSTOMER_TRN_CHEQUES_IN_FLOAT + customerID}/>
             <FetchDataDisplay displayValue="Cheques In Hand" key= {API_CUSTOMER_TRN_CHEQUES_IN_HAND + customerID} source={API_CUSTOMER_TRN_CHEQUES_IN_HAND + customerID}/>
             <FetchDataDisplay displayValue="Customer Balance" key= {API_CUSTOMER_BALANCE + customerID} source={API_CUSTOMER_BALANCE + customerID}/>
+            <FetchDataDisplay displayValue="Remaining Balance" key= {API_CUSTOMER_REMAINING_BALANCE + customerID} source={API_CUSTOMER_REMAINING_BALANCE + customerID}/>
           </CardSection>
         </View>
 

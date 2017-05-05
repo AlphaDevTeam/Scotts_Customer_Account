@@ -9,8 +9,8 @@ import {
   View,TouchableWithoutFeedback,DatePickerAndroid
 } from 'react-native';
 
-var server = "192.168.43.234";
-//var server = "192.168.1.3";
+//var server = "192.168.43.234";
+var server = "192.168.1.3";
 var serverPort = "3000";
 var customerID = "0";
 const API_Customer = 'http://' + server + ':' + serverPort + '/api/Customer?Inactive=0';
